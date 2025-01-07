@@ -17,7 +17,6 @@ userRouter.post("/signup", async (c)=>{
     }).$extends(withAccelerate())
 
     const body = await c.req.json();
-    console.log(body);
     
     try {
         const user = await prisma.user.create({
@@ -37,6 +36,38 @@ userRouter.post("/signup", async (c)=>{
     } catch (error) {
         c.status(411);
         return c.text("Invalid Inputs")
+        
+    }
+
+})
+
+userRouter.put("/signin", async (c)=>{
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+
+    const body = await c.req.json();
+    try {
+        const user = await prisma.user.findUnique({
+            where:{
+                username:body.username,
+                password:body.password
+            }
+        });
+
+        if (!user) {
+            c.status(403)
+            return c.text("user not found!");
+        }
+        const jwt_token = await sign({
+            id:user.id
+        }, c.env.JWT_SECRET)
+        return c.text(jwt_token)
+        
+    } catch (error) {
+        c.status(411);
+        console.log(error);        
+        return c.text("Server Error will authenticating")
         
     }
 
