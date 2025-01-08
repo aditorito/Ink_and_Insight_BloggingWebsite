@@ -41,7 +41,36 @@ blogRouter.post('/', async (c) => {
         }
 });
 
-blogRouter.put('/', async (c) => { });
+blogRouter.put('/', async (c) => { 
+    console.log("Reached the blog PUT route");
+    const prisma = new PrismaClient({
+            datasourceUrl: c.env.DATABASE_URL,
+        }).$extends(withAccelerate())
+    
+        const body = await c.req.json();        
+        
+        try {
+            const blog = await prisma.blog.update({
+                where:{
+                    id:body.id
+                },
+                data:{
+                    title:body.title,
+                    content:body.content
+                }
+            })
+
+            return c.json({
+                id:blog.id
+            })
+            
+        } catch (error) {
+            c.status(411);
+            return c.text("Somthing went wrong")
+            
+        }
+
+});
 
 blogRouter.get('/',  async (c)=>{});
 
