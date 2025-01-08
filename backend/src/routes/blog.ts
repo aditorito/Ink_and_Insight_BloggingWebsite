@@ -72,8 +72,51 @@ blogRouter.put('/', async (c) => {
 
 });
 
-blogRouter.get('/',  async (c)=>{});
+blogRouter.get('/',  async (c)=>{
+    console.log("Reached the blog PUT route");
+    const prisma = new PrismaClient({
+            datasourceUrl: c.env.DATABASE_URL,
+        }).$extends(withAccelerate())
+    
+        const body = await c.req.json();        
+        
+        try {
+            const blog = await prisma.blog.findFirst({
+                where:{
+                    id:body.id
+                }
+            })
 
-blogRouter.get('/bulk',  async (c)=>{});
+            return c.json({
+                blog
+            })
+            
+        } catch (error) {
+            c.status(411);
+            return c.text("Somthing went wrong")
+            
+        }
+});
+
+blogRouter.get('/bulk',  async (c)=>{
+    console.log("Reached the blog PUT route");
+    const prisma = new PrismaClient({
+            datasourceUrl: c.env.DATABASE_URL,
+        }).$extends(withAccelerate())    
+        
+        try {
+            const blog = await prisma.blog.findMany({
+            })
+
+            return c.json({
+                blogs:blog
+            })
+            
+        } catch (error) {
+            c.status(411);
+            return c.text("Somthing went wrong")
+            
+        }
+});
 
 
