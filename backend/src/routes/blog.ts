@@ -115,24 +115,24 @@ blogRouter.get('/:id',  async (c)=>{
         }
 });
 
-blogRouter.get('/bulk',  async (c)=>{
-    console.log("Reached the blog PUT route");
-    const prisma = new PrismaClient({
-            datasourceUrl: c.env.DATABASE_URL,
-        }).$extends(withAccelerate())    
-        
-        try {
-            const blog = await prisma.blog.findMany({})
 
-            return c.json({
-                blogs:blog
-            })
-            
-        } catch (error) {
-            c.status(411);
-            return c.text("Somthing went wrong")
-            
-        }
-});
+blogRouter.post("/allposts", async (c) => {
+    console.log("Reached the blog GET all route");
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    try {
+        const blogs = await prisma.blog.findMany();
+        console.log("Fetched blogs:", blogs);
+
+        return c.json({ blogs });
+    } catch (error) {
+        console.error("Error fetching all blogs:", error);
+        c.status(500);
+        return c.text("Something went wrong while fetching blogs.");
+    }
+})
 
 
