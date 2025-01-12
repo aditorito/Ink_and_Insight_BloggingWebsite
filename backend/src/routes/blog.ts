@@ -63,7 +63,8 @@ blogRouter.post('/', async (c) => {
         })
 
     } catch (error) {
-        c.status(411);
+
+        c.status(501);
         return c.text("Somthing went wrong")
 
     }
