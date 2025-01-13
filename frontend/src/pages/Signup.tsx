@@ -24,8 +24,8 @@ export const Auth = ({ type } : {type: "signup" | "signin" }) => {
           <p className="text-gray-600 mb-6 md:mb-8 text-sm md:text-base">
             {type === "signup" ? " Already have an account?  " : "Don't Have Account! "}
 
-            <Link to={"/signin"} className="text-gray-600 underline">
-              Login
+            <Link to={type === "signin" ? "/signup" : "/signin"} className="text-gray-600 underline">
+              { type === "signin" ? "SignUp":"Login"}
             </Link>
           </p>
 
@@ -48,8 +48,8 @@ export const Auth = ({ type } : {type: "signup" | "signin" }) => {
               />
             </div>
 
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            { type == 'signup' ? <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                 Name
               </label>
               <input
@@ -64,9 +64,9 @@ export const Auth = ({ type } : {type: "signup" | "signin" }) => {
                     }))                    
                 }}
               />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            </div> : null }
+            { type == 'signup' ? <div>
+               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email
               </label>
               <input
@@ -81,7 +81,7 @@ export const Auth = ({ type } : {type: "signup" | "signin" }) => {
                     }))                    
                 }}
               />
-            </div>
+            </div> : null }
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
