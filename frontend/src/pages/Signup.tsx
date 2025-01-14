@@ -1,19 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { RighSideAuthPage } from "../components/RighSideAuthPage";
 import { useState } from "react";
 import { SignupInput } from "@aditorito/medium-clone";
 import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 
 
 export const Auth = ({ type } : {type: "signup" | "signin" }) => {
+    const navigate = useNavigate();
     const [postInputs, setpostInputs] = useState<SignupInput>({
         name:"",
         username:"",
         email:"",
         password:""
-    })
+    });
+
+    async function sendRequest() {
+        try {
+            console.log("inside send function");
+            console.log(postInputs);
+            
+            
+            const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInputs)
+            const jwt = response.data;
+            localStorage.setItem("token", jwt);
+            navigate("/blog/");
+
+            
+        } catch (error) {
+            alert("Error while Sign up")
+            console.log(error);
+            
+            
+        }
+    }
     
   return (
     <div className="flex flex-col min-h-screen">
@@ -103,7 +125,8 @@ export const Auth = ({ type } : {type: "signup" | "signin" }) => {
             </div>
 
             <button
-              type="submit"
+            onClick={sendRequest}
+            type="button"
               className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 transition-colors text-sm md:text-base"
             >
               {type === "signup" ? "Sign up" : "Sign in"}
