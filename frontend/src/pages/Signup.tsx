@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import { RighSideAuthPage } from "../components/RighSideAuthPage";
 import { useState } from "react";
 import { SignupInput } from "@aditorito/medium-clone";
+import axios from "axios";
 
 
 
@@ -13,6 +14,7 @@ export const Auth = ({ type } : {type: "signup" | "signin" }) => {
         email:"",
         password:""
     })
+    
   return (
     <div className="flex flex-col min-h-screen">
 
