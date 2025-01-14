@@ -2,6 +2,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Auth } from './pages/Signup'
 import { Blog } from './pages/Blog'
+import { Blogs } from './pages/Blogs'
 
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
             <Route path='/signup' element={<Auth type={'signup'}/>}/>
             <Route path='/signin'  element={<Auth type={'signin'}/>}/>
             <Route path='/blog/:id' element={<Blog/>}/>
+            <Route path='/blogs' element={<Blogs/>}/>
+
           </Routes>
         </BrowserRouter>
       </div>
