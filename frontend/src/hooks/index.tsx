@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
 
 type Blog = {
-    id: string;
+    id: number;
     title: string;
     content: string;
     author: {

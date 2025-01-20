@@ -20,6 +20,7 @@ export const Blogs = () => {
         <AppBar/>
 
         {blogs.map(blogs => <BlogCard 
+        id={blogs.id}
         authorName={blogs.author.name}
         title={blogs.title}
         content={blogs.content}
