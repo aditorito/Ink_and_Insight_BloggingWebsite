@@ -1,6 +1,10 @@
+import axios from "axios";
 import  { useState } from "react";
+import { BACKEND_URL } from "../config";
+import { useNavigate } from "react-router-dom";
 
 export const Publish = () => {
+const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
@@ -21,7 +25,17 @@ export const Publish = () => {
         <h1 className="text-2xl font-bold">Write Your Post</h1>
         <button
           className="bg-green-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-green-600"
-          onClick={handlePublish}
+          onClick={async ()=>{
+            const response = await axios.post(`${BACKEND_URL}/api/v1/blog`, {
+                title,
+                content
+            }, {
+                headers: {
+                    Authorization: localStorage.getItem("token")
+                },
+            });
+            navigate(`/blog/${response.data.id}`)
+          }}
         >
           Publish
         </button>

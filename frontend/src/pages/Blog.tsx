@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import { useBlog } from "../hooks"
 import FullBlogCard from "../components/FullBlogCard";
 import { useParams } from "react-router-dom";
+import Appbar from "../components/Appbar";
 
 export const Blog = () => {
     const { id } = useParams();
@@ -19,6 +20,7 @@ export const Blog = () => {
         </div>
     }
     return <div>
+        <Appbar/>
         <FullBlogCard blog = {Blog}/>
     </div>
 }

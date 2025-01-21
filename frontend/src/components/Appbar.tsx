@@ -4,11 +4,13 @@ const AppBar = () => {
   return (
     <header className="flex items-center justify-between px-4 py-2 border-b border-gray-200">
       {/* Logo */}
+      <Link to={'/allposts'}>
       <div className="flex items-center">
         <a href="/" className="text-xl font-serif font-bold">
-          Medium
+          BholuBlogs
         </a>
       </div>
+      </Link>
 
       {/* Search and Actions */}
       <div className="flex items-center space-x-6">
