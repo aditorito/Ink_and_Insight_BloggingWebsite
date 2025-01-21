@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
 
-type Blog = {
+export interface Blog  {
     id: number;
     title: string;
     content: string;
@@ -13,6 +13,52 @@ type Blog = {
 };
 
 type ErrorType = AxiosError | null; // Error can be an AxiosError or null
+
+export const useBlog =({ id }: {id:string}) => {
+    const [loading, setLoading] = useState<boolean>(true); // Tracks loading state
+    const [Blog, setBlog] = useState<Blog >(null); // Stores blogs data
+
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            console.log("Starting fetchBlogs...");
+            try {
+                const token = localStorage.getItem("token"); // Retrieve token from localStorage
+                console.log("Authorization Token:", token);
+
+                // Axios POST request
+                const response = await axios.post(
+                    `${BACKEND_URL}/api/v1/blog/${id}`,{},
+                    {
+                        headers: {
+                            Authorization: token,
+                        },
+                    }
+    
+                );
+
+                // Log full response
+                if (response.data && response.data.blog) {
+                    setBlog(response.data.blog); // Update blogs state
+                } else {
+                    console.warn("Unexpected response format:", response.data);
+                }
+            } catch (error) {
+                console.error("Error occurred while fetching blogs:", error);
+            } finally {
+                setLoading(false); // Set loading to false in all cases
+                console.log("Finished fetchBlogs.");
+            }
+        };
+
+        fetchBlogs(); // Call fetchBlogs inside useEffect
+    }, [id]);
+
+    return {
+        loading,
+        Blog,
+    };
+
+}
 
 export const useBlogs = () => {
     const [loading, setLoading] = useState<boolean>(true); // Tracks loading state
@@ -27,7 +73,7 @@ export const useBlogs = () => {
                 console.log("Authorization Token:", token);
 
                 // Axios POST request
-                const response = await axios.post(
+                const response = await axios.put(
                     `${BACKEND_URL}/api/v1/blog/allposts`,
                     {}, // Pass an empty object as the request body (if needed)
                     {
@@ -37,8 +83,6 @@ export const useBlogs = () => {
                     }
                 );
 
-                console.log("Response Data:", response.data); 
-                console.log(response.data.blogs[1].author.name);
                 // Log full response
                 if (response.data && response.data.blogs) {
                     setBlogs(response.data.blogs); // Update blogs state

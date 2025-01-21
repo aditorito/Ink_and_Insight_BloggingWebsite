@@ -112,7 +112,7 @@ blogRouter.put('/', async (c) => {
 
 });
 
-blogRouter.get('/:id', async (c) => {
+blogRouter.post('/:id', async (c) => {
     console.log("Reached the blog PUT route");
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
@@ -124,6 +124,16 @@ blogRouter.get('/:id', async (c) => {
         const blog = await prisma.blog.findFirst({
             where: {
                 id: Number(id)
+            },
+            select: {
+                id:true,
+                title: true,
+                content:true,
+                author:{
+                    select:{
+                        name:true
+                    }
+                }
             }
         })
 
@@ -139,7 +149,7 @@ blogRouter.get('/:id', async (c) => {
 });
 
 
-blogRouter.post("/allposts", async (c) => {
+blogRouter.put("/allposts", async (c) => {
     console.log("Reached the blog GET all route");
 
     const prisma = new PrismaClient({
