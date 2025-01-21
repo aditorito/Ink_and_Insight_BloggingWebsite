@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const AppBar = () => {
   return (
@@ -26,13 +27,15 @@ const AppBar = () => {
         </div>
 
         {/* Write Button */}
+        <Link to={'/publish'}>
         <button className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
           <div className="relative w-5 h-5">
             <div className="absolute w-4 h-4 border-2 border-current rounded-sm top-0 left-0"></div>
             <div className="absolute w-2.5 h-0.5 bg-current transform rotate-45 top-2 left-1"></div>
           </div>
-          <span className="hidden sm:inline">Write</span>
+          <button className="hidden sm:inline">Write</button>
         </button>
+        </Link>
 
         {/* Notifications */}
         <button className="text-gray-700 hover:text-gray-900 relative">

@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 export const Blog = () => {
     const { id } = useParams();
     const {loading,Blog} = useBlog({
-        id : id || ""
+        id : id  || ""
     });
     if (loading) {
         return <div>
