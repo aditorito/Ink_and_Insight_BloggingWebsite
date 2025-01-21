@@ -4,6 +4,7 @@ import { useBlog } from "../hooks"
 import FullBlogCard from "../components/FullBlogCard";
 import { useParams } from "react-router-dom";
 import Appbar from "../components/Appbar";
+import { SkelatonComponents } from "../components/SkelatonComponents";
 
 export const Blog = () => {
     const { id } = useParams();
@@ -14,6 +15,7 @@ export const Blog = () => {
         return <div>
                     <AppBar/>
                     <div>Loading</div>
+                    <SkelatonComponents/>
                     <Footer/>
 
 

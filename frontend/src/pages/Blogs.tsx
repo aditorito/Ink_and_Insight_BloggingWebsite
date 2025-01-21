@@ -1,6 +1,7 @@
 import AppBar from "../components/Appbar"
 import { BlogCard } from "../components/BlogCard"
 import Footer from "../components/Footer"
+import { SkelatonComponents } from "../components/SkelatonComponents"
 import { useBlogs } from "../hooks"
 
 export const Blogs = () => {
@@ -9,7 +10,10 @@ export const Blogs = () => {
     if (loading) {
         return <div>
             <AppBar />
-            <div>Loading</div>
+            <SkelatonComponents/>
+            <SkelatonComponents/>
+            <SkelatonComponents/>
+
             <Footer />
 
 
