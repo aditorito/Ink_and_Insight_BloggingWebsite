@@ -11,12 +11,68 @@ export interface Blog  {
     }
     // Add more fields based on your blog API response structure
 };
+export interface userBlog {
+    title: string;
+    id:number,
+    authorId:number,
+    content:string
+}
+
+
+export interface User {
+    id: number;
+    email: string;
+    username:string;
+    name:string;
+    blogs: userBlog[]
+}
+
+
+export const userProfile = () => {
+    const [loading, setLoading] = useState<boolean>(true); // Tracks loading state
+    const [Profile, setProfile] = useState<User | null>(); // Stores blogs data
+
+
+    useEffect(()=>{
+        const fetchprofile = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await axios.get(`${BACKEND_URL}/api/v1/profile`,{
+                    headers:{
+                        Authorization: token,
+                    },
+                })
+                console.log(response);
+                
+
+                if (response.data && response.data.user) {
+                    setProfile(response.data.user); // Update blogs state
+                } else {
+                    console.warn("Unexpected response format:", response.data);
+                }
+            } catch (error) {
+                console.error("Error occurred while fetching blogs:", error);
+            } finally {
+                setLoading(false); // Set loading to false in all cases
+                console.log("Finished fetchBlogs.");
+            }
+
+        };
+
+        fetchprofile();
+    },[])
+    return {
+        loading,
+        Profile
+    };
+
+}
 
 type ErrorType = AxiosError | null; // Error can be an AxiosError or null
 
 export const useBlog =({ id }: {id:string}) => {
     const [loading, setLoading] = useState<boolean>(true); // Tracks loading state
-    const [Blog, setBlog] = useState<Blog >(null); // Stores blogs data
+    const [Blog, setBlog] = useState<Blog>(); // Stores blogs data
 
     useEffect(() => {
         const fetchBlogs = async () => {

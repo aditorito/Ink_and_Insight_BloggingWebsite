@@ -49,6 +49,7 @@ const AppBar = () => {
         </button>
 
         {/* Profile Picture */}
+        <Link to={'/profile'}>
         <button className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
           <img
             src="/api/placeholder/32/32"
@@ -56,6 +57,7 @@ const AppBar = () => {
             className="w-full h-full object-cover"
           />
         </button>
+        </Link>
       </div>
     </header>
   );

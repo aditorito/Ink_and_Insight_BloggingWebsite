@@ -14,7 +14,6 @@ export const Blog = () => {
     if (loading) {
         return <div>
                     <AppBar/>
-                    <div>Loading</div>
                     <SkelatonComponents/>
                     <Footer/>
 

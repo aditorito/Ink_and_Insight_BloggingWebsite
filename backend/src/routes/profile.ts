@@ -47,7 +47,13 @@ profilRouter.get("/", async (c) => {
                 email: true,
                 username: true,
                 name: true,
-                blogs: true
+                blogs: {
+                    select:{
+                        id:true,
+                        title:true,
+                        content:true
+                    }
+                }
             }
         })
 
@@ -59,8 +65,5 @@ profilRouter.get("/", async (c) => {
         console.log(error);
         c.status(411);
 
-
     }
-
-
 });
