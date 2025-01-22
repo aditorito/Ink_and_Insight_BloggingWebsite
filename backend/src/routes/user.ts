@@ -96,4 +96,5 @@ userRouter.post("/signin", async (c)=>{
 
 userRouter.get("/", async (c)=>{
     return c.text("jai baba ki kya hal hai")
-})
+});
+
