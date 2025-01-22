@@ -5,7 +5,8 @@ import { SkelatonComponents } from "../components/SkelatonComponents"
 import { useBlogs } from "../hooks"
 
 export const Blogs = () => {
-    const { loading, blogs } = useBlogs();
+    const { loading, blogs } = useBlogs();  
+      
 
     if (loading) {
         return <div>
@@ -23,7 +24,7 @@ export const Blogs = () => {
     return <div>
         <AppBar />
 
-        {blogs.map(blogs => <BlogCard
+        {Object.values(blogs).reverse().map(blogs => <BlogCard
             id={blogs.id}
             authorName={blogs.author.name}
             title={blogs.title}
